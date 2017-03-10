@@ -1,0 +1,139 @@
+$primary-color-dark:   #C2185B;
+$primary-color:        #E91E63;
+$primary-color-light:  #F8BBD0;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #FF5722;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
+
+
+body, html {
+	margin: 0;
+	padding: 0;
+	width:100%;
+}
+.display--inline-block {
+	display: inline-block;
+}
+.display--block {
+	display: block;
+}
+
+header.mdl-layout__header {
+	background: #ff9454;
+	background-repeat: no-repeat;
+	background-position:right center;
+	.mdl-layout__tab-bar {
+		background: linear-gradient(90deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.0) 90%);
+	}
+	.mdl-layout__tab-bar-button {
+		background-color: transparent;
+	}
+	.mdl-layout__tab {
+		color:white;
+		background-color: rgba(255,255,255,0.2);
+	}
+}
+
+.container {
+	padding:16px 56px;
+}
+
+.container-flow {
+	display: flex;
+	width:calc(100% - 112px);
+	flex-flow: wrap;
+	margin:16px 56px;
+}
+
+.mdl-chip {
+	margin-right: 3px;
+}
+
+.search-icon {
+	right: 0;
+	left: auto;
+	position: absolute;
+}
+
+.mdl-card {
+	margin: 0 16px 16px 0;
+	> .mdl-card__title {
+		height: 150px;
+		background-size:cover;
+		background-position: center center;
+		.mdl-card__title-text {
+			color:white;
+			background: rgba(0,0,0,0.7);
+		}
+	}
+}
+
+form {
+	> div.mdl-textfield {
+		display: block;
+		width:100%;
+		max-width: 500px;
+		
+		&:nth-child(3) {
+			width: 70%;
+			max-width: 350px;
+			display: inline-block;
+			margin-right: 25px;
+		}
+		&:nth-child(4) {
+			width: 125px;
+			max-width: 125px;
+			display: inline-block;
+		}
+	}
+	.select-container {
+		display: inline-block;
+		background: $primary-color;
+		padding: 5px 0px 5px 15px;
+		width: 150px;
+		margin-left: 16px;
+	}
+	select {
+		width: 140px;
+		border: none;
+		background: $primary-color;
+		border-radius: 0;
+		font-size: 16px;
+	}
+	.mdl__label {
+    color: rgba(0,0,0,.26);
+    font-size: 16px;
+    pointer-events: none;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    margin-bottom: 10px;
+    display: inline-block;
+	}
+}
+
+.button--recipe-edit {
+	position: fixed;
+	right: 56px;
+	top: 150px;
+}
+
+.button--recipe-delete {
+	position: fixed;
+	right: 128px;
+	top: 150px;
+}
+
+.mdl-dialog {
+	background: grey;
+	position:fixed;
+	top: 0px;
+	left:50vw;
+	transform: translate(-50%, 120px);
+	z-index: 100000;
+	opacity:0.1
+
+}

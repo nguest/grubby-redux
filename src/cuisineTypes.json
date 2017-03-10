@@ -1,0 +1,14 @@
+module.exports = [
+	"Mexican",
+	"Chinese",
+	"Italian",
+	"French",
+	"American",
+	"British",
+	"Thai",
+	"Korean",
+	"Swedish",
+	"Danish",
+	"Swiss",
+	"Indian"
+]
