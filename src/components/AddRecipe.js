@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router'
 import { connect } from "react-redux";
 import AddRecipeForm from "./AddRecipeForm";
 
@@ -26,12 +27,12 @@ class AddRecipe extends React.Component {
 		  return (<div className="container">
 		  	<h2>New One!</h2>
 		  	<p>New recipe  <strong>{this.props.addItemSuccess.item.title} </strong> added successfully.</p>
-		  	<a href={'recipe/' + this.props.addItemSuccess.item.path} className="mdl-button mdl-js-button mdl-button--raised">
+		  	<Link to={'recipe/' + this.props.addItemSuccess.item.path} className="mdl-button mdl-js-button mdl-button--raised">
 						Go To Recipe
-				</a>
-		  	<a href="/add-recipe" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+				</Link>
+		  	<Link to="/add-recipe" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 						Add Another ?
-				</a>
+				</Link>
 			</div>)
 	  }
 	  return (

@@ -1,6 +1,7 @@
 import React from "react";
-import { Router, Route, IndexRoute } from "react-router";
+import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import { history } from "./store.js";
+import { createHistory } from 'history';
 import App from "./components/App";
 import Home from "./components/Home";
 import Recipe from "./components/Recipe";
@@ -9,9 +10,15 @@ import EditRecipe from "./components/EditRecipe";
 
 import NotFound from "./components/NotFound";
 
+/*
+const appHistory = useRouterHistory(createHistory)({
+  basename: "/grubby"
+});
+*/
+
 // build the router
 const router = (
-  <Router onUpdate={() => window.scrollTo(0, 0)} history={history}>
+  <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="recipe(/:id)" component={Recipe}/>

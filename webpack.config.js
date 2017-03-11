@@ -28,6 +28,7 @@ module.exports = {
   output: {
     path: __dirname + '/public/js',
     publicPath: 'js/',
+    //publicPath: 'grubby/js/',
     filename: 'bundle.js',
     chunkFilename: isDebug ? '[id].js?[chunkhash]' : '[id].[chunkhash].js',
 

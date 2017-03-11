@@ -1,6 +1,5 @@
 import createReducer from '../lib/createReducer';
 import * as types from '../actions/types';
-import ApiMeals from '../api/meals';
 
 export function itemsHasErrored(state = false, action) {
   switch (action.type) {
@@ -10,6 +9,7 @@ export function itemsHasErrored(state = false, action) {
       return state;
   }
 }
+
 export function itemsIsLoading(state = false, action) {
   switch (action.type) {
 		case 'ITEMS_IS_LOADING':
@@ -19,6 +19,7 @@ export function itemsIsLoading(state = false, action) {
 	  return state;
 	}
 }
+
 export function items(state = [], action) {
 	switch (action.type) {
 		case 'ITEMS_FETCH_DATA_SUCCESS':
@@ -29,6 +30,7 @@ export function items(state = [], action) {
 		  return state;
 	}
 }
+
 export function addItemSuccess(state = {status:false,item: {}}, action) {
 	switch (action.type) {
 		case 'ADD_ITEM_SUCCESS':

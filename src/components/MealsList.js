@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router'
 import { connect } from "react-redux";
 import cuisineTypes from "../cuisineTypes.json";
 
@@ -95,16 +96,16 @@ class MealsList extends React.Component {
     }
     if (this.props.isLoading) {
       return (
-        <div className="container">
-      		<div className="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+        <div className="container pointer-events--none">
+      		<div className="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active pointer-events--none"></div>
 				</div>
 			)
-    }	
-    if (!this.props.isLoading) {
+    }	else {
+    //if (!this.props.isLoading) {
       return (
 	      <div>
 	      
-		      <div className="container-flow">
+		      <div className="container-flow align-items--center">
 						<div className="mdl-textfield mdl-js-textfield">
 					    <label className="search-icon">
 					      <i className="material-icons">search</i>
@@ -114,17 +115,20 @@ class MealsList extends React.Component {
 						</div>
 						<div>
 							{this.state.viewableCuisineTypes.map(cuisineType =>
-							<span className="mdl-chip" key={cuisineType} onClick={(value) => this.handleCuisineChange(cuisineType)}>
+							<button className="mdl-chip" key={cuisineType} onClick={(value) => this.handleCuisineChange(cuisineType)}>
 								<span className="mdl-chip__text">{cuisineType}</span>
 								{ (this.state.viewableCuisineTypes.length == 1) ?
-								<button type="button" className="mdl-chip__action"><i className="material-icons">cancel</i></button> :
+								<span className="mdl-chip__action"><i className="material-icons">cancel</i></span> :
 								null
 								}
-							</span>
+							</button>
 							)}
 						</div>
 
 	        </div>
+	        <div className="container">
+	          <p><span className="mdl-number">{this.state.queryResult.length}</span> recipes shown.</p>
+					</div>
 
           <div className="container-flow">
  
@@ -141,9 +145,9 @@ class MealsList extends React.Component {
 								</div>
 							
 							  <div className="mdl-card__actions mdl-card--border">
-							    <a href={'/recipe/'+meal.path} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+							    <Link to={'/recipe/'+meal.path} className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
 							      See Recipe
-							    </a>
+							    </Link>
 							  </div>
 							</div>
 	
@@ -162,10 +166,8 @@ class MealsList extends React.Component {
 function mapStateToProps(state) {
   return {
     items: state.items,
-
-    // https://github.com/reactjs/react-router-redux#how-do-i-access-router-state-in-a-container-component
-    // react-router-redux wants you to get the url data by passing the props through a million components instead of
-    // reading it directly from the state, which is basically why you store the url data in the state (to have access to it)
+		isLoading: state.itemsIsLoading,
+		hasErrored: state.itemsHasErrored,
     page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
   };
 }

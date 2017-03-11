@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router';
 import { connect } from "react-redux";
 import { unixTimeToString } from '../lib/utilFunctions';
 import { deleteItem } from '../actions/items';
@@ -20,17 +21,16 @@ class Recipe extends React.Component {
 	componentDidMount() {
     document.title = this.props.routeParams.id;
     
-    const arr = Object.keys(this.props.items).map(key => this.props.items[key])
-
-    const meal = {};
-    const findMeal = (meal) => {
-	    console.log('meal',meal)
-	    return meal.path === this.props.routeParams.id;
-    }
-    
-    console.log(this.props.items.find(findMeal));
-    
+		  const meals = Object.keys(this.props.items).map(key => this.props.items[key])
+			let meal = meals.find((x)=>{
+				return x.path === this.props.routeParams.id;
+			})
+			this.setState({
+				meal
+			})
+        
     this.setState({
+	    //meal,
 	    id: this.props.routeParams.id,
 	    loading: false,
 	    dialogShown: false
@@ -83,9 +83,9 @@ class Recipe extends React.Component {
 		  	<h2>Deleted!</h2>
 				<p>Recipe <strong>{'"' + this.props.removeItemSuccess.item.title + '"'}</strong> deleted successfully.</p>
 
-		  	<a href="/" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+		  	<Link to="/" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 						Go Home ?
-				</a>
+				</Link>
 			</div>)
 	  }
     if (!this.props.isLoading) {
@@ -94,9 +94,9 @@ class Recipe extends React.Component {
 	      <div className="container">
 	      
 	      	<h2 className="display--inline-block">{meal.title}</h2>
-	      	<a className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored button--recipe-edit" href={'../edit/' + meal.path}>
+	      	<Link className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored button--recipe-edit" to={'../edit/' + meal.path}>
 						<i className="material-icons">mode_edit</i>
-					</a>
+					</Link>
 					<button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect  button--recipe-delete" onClick={this.modalShow}>
 						<i className="material-icons">delete_forever</i>
 					</button>
@@ -105,9 +105,9 @@ class Recipe extends React.Component {
 						<span className="mdl-chip__text">{meal.cuisineType}</span>
 					</div>
 					{ meal.recipeFileUrl ?
-						<a href={meal.recipeFileUrl} className="display--block">
+						<Link to={meal.recipeFileUrl} className="display--block">
 							<img src={meal.recipeFileUrl} style={{width:200}}/> 
-						</a>	:
+						</Link>	:
 						null
 					}
 					{ meal.bookName ?

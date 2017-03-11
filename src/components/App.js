@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router'
 import { connect } from "react-redux";
 
 import "../stylesheets/main.scss";
@@ -26,14 +27,14 @@ class App extends React.Component {
 	    <div  className="mdl-layout mdl-js-layout">
 		    <header className="mdl-layout__header" style={{backgroundImage: 'url(//' + window.location.hostname + ':'+ window.location.port + '/assets/header-bg.jpg)'}} >
 		    	<div className="mdl-layout__header-row">
-		    		<a href="/">
+		    		<Link to="/">
 		    			<img src={'//' + window.location.hostname + ':'+ window.location.port + '/assets/logo.svg'}/>
-		    		</a>
+		    		</Link>
 		    	</div>
 		    	<div className="mdl-layout__tab-bar mdl-js-ripple-effect">
 		    		{ menuItems.map(menuItem => {
 			    		const isActive = (this.props.location.pathname === menuItem.path) ? 'is-active' : '';
-			    		return (<a href={menuItem.path} key={menuItem.text} className={"mdl-layout__tab " + isActive}>{menuItem.text}</a>)	
+			    		return (<Link to={menuItem.path} key={menuItem.text} className={"mdl-layout__tab " + isActive}>{menuItem.text}</Link>)	
 			      })}
           </div>
 		    </header>

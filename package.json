@@ -1,14 +1,7 @@
 {
-  "name": "redux-minimal",
+  "name": "Grubby",
   "version": "1.0.0",
-  "description": "Start building complex react-redux apps today, with this minimalist easy to understand starter kit (boilerplate)",
-  "keywords": [
-    "react",
-    "redux",
-    "minimal",
-    "starter kit",
-    "boilerplate"
-  ],
+  "description": "",
   "main": "index.js",
   "homepage": "http://redux-minimal.js.org/",
   "repository": {
