@@ -44,10 +44,27 @@ header.mdl-layout__header {
 		color:white;
 		background-color: rgba(255,255,255,0.2);
 	}
+	
+	@media (max-width: 1024px) {
+		.mdl-layout__tab-bar-container {
+			display: none;
+		}
+	}
+}
+
+@media (min-width: 1025px) {
+	.mdl-layout__drawer,
+	.mdl-layout__drawer-button {
+		display: none;
+	}
 }
 
 .container {
 	padding:16px 56px;
+	@media (max-width: 1024px) {
+		padding:16px;
+	}
+
 }
 
 .container-flow {
@@ -55,6 +72,9 @@ header.mdl-layout__header {
 	width:calc(100% - 112px);
 	flex-flow: wrap;
 	margin:16px 56px;
+	@media (max-width: 1024px) {
+		margin:16px;
+	}
 }
 
 

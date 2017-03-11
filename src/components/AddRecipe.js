@@ -14,7 +14,7 @@ class AddRecipe extends React.Component {
 		}
 	}
 	componentDidMount() {
-    document.title = this.props.routeParams.id;
+    document.title = 'Add Recipe';
     
   }
   handleFormSubmit = (values) => {

@@ -20,11 +20,11 @@ class App extends React.Component {
 		const menuItems = [
 			{ text: 'Home', path: '/'},
 			{ text: 'Add', path: '/add-recipe'},
-			{ text: 'Tab3', path: '/tab-3'}	
 		];
 	  
     return (
-	    <div  className="mdl-layout mdl-js-layout">
+
+	    <div  className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		    <header className="mdl-layout__header" style={{backgroundImage: 'url(//' + window.location.hostname + ':'+ window.location.port + '/assets/header-bg.jpg)'}} >
 		    	<div className="mdl-layout__header-row">
 		    		<Link to="/">
@@ -38,10 +38,21 @@ class App extends React.Component {
 			      })}
           </div>
 		    </header>
+		    <div className="mdl-layout__drawer">
+			    <span className="mdl-layout-title">Menu</span>
+			    <nav className="mdl-navigation">
+						{ menuItems.map(menuItem => {
+			    		const isActive = (this.props.location.pathname === menuItem.path) ? 'is-active' : '';
+			    		return (<Link to={menuItem.path} key={menuItem.text} className={"mdl-navigation__link " + isActive}>{menuItem.text}</Link>)	
+			      })}
+
+			    </nav>
+			  </div>
 		    <main className="mdl-layout__content">
 		    	{this.props.children}
 				</main>
 	    </div>
+
     );
   }
 }

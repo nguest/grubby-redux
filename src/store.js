@@ -12,9 +12,12 @@ let middlewares = [];
 
 // add the router middleware
 middlewares.push(routerMiddleware(browserHistory));
-const loggerMiddleware = createLogger()
-
-middlewares.push(loggerMiddleware);
+console.log('process.env.NODE_ENV',process.env.NODE_ENV)
+if (process.env.NODE_ENV != 'production') {
+  const createLogger = require(`redux-logger`);
+  const logger = createLogger();
+  middlewares.push(logger);
+}
 
 middlewares.push(thunkMiddleware);
 // apply the middleware

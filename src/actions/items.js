@@ -82,24 +82,23 @@ export function addItem(newItem, isNew) {
 			const metadata = {
 				contentType: newItem.recipeFile[0].type,
 			};
-			let recipeFileUrl = '';
+			let recipeFile = {};
 			var uploadTask = storageRef.child('images/'+newItem.recipeFile[0].name).put(file, metadata)
 			.then((result, error) => {
 				if (result) {
 					console.log('result',result)			
 					console.log('saved to storage')
-					recipeFileUrl = result.a.downloadURLs[0];
-					doDatabaseSave(recipeFileUrl)
+					recipeFile = { url: result.a.downloadURLs[0], type: result.a.contentType }
+					doDatabaseSave(recipeFile)
 				}
 			})
 			
 		} else {
-			
 			 doDatabaseSave(null);
 		}
 			  
-		function doDatabaseSave(recipeFileUrl) {
-			console.log('recipeFileUrl',recipeFileUrl)
+		function doDatabaseSave(recipeFile) {
+			console.log('recipeFile',recipeFile)
 		  newItem.notes = newItem.notes ? newItem.notes.replace(/\r?\n/g, '<br />') : null
 		  
 		  
@@ -113,7 +112,7 @@ export function addItem(newItem, isNew) {
 			  bookName: newItem.bookName || null,
 			  bookPageNo: newItem.bookPageNo || null,
 			  webUrl: newItem.webUrl || null,
-			  recipeFileUrl: recipeFileUrl || null,
+			  recipeFile: recipeFile || null,
 			  notes: newItem.notes
 		  }
 	

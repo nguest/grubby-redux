@@ -68,6 +68,7 @@ class Recipe extends React.Component {
   }
 
   render() {
+	  console.log('this.state',this.state)
 		if (this.props.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
@@ -104,10 +105,18 @@ class Recipe extends React.Component {
 					<div className="mdl-chip">
 						<span className="mdl-chip__text">{meal.cuisineType}</span>
 					</div>
-					{ meal.recipeFileUrl ?
-						<Link to={meal.recipeFileUrl} className="display--block">
-							<img src={meal.recipeFileUrl} style={{width:200}}/> 
-						</Link>	:
+					{ meal.recipeFile ? (
+						<Link to={meal.recipeFile.url} className="display--block">
+							{ meal.recipeFile.type.substring(0,5) == 'image' ?
+								(<img src={meal.recipeFile.url} style={{width:200}}/>) :
+								null
+							}
+							{
+							meal.recipeFile.type == 'application/pdf' ?
+								(<embed src={meal.recipeFile.url} style={{width:500, height: 500}}/> ):
+								null
+							}
+						</Link>):
 						null
 					}
 					{ meal.bookName ?
@@ -145,6 +154,9 @@ class Recipe extends React.Component {
 	  }
 	}
 }
+
+//pdf: <embed src="file_name.pdf" width="800px" height="2100px" />
+
 
 function mapStateToProps(state) {
   return {
