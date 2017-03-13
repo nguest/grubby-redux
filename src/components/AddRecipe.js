@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { connect } from "react-redux";
 import AddRecipeForm from "./AddRecipeForm";
 
-import { addItem } from '../actions/items';
+import { addItem, addItemSuccess } from '../actions/items';
 
 class AddRecipe extends React.Component {
 	
@@ -17,6 +17,9 @@ class AddRecipe extends React.Component {
     document.title = 'Add Recipe';
     
   }
+  componentWillUnmount() {
+	  this.props.clearProps();
+  }
   handleFormSubmit = (values) => {
     this.props.addItem(values, true)
   }
@@ -27,7 +30,7 @@ class AddRecipe extends React.Component {
 		  return (<div className="container">
 		  	<h2>New One!</h2>
 		  	<p>New recipe  <strong>{this.props.addItemSuccess.item.title} </strong> added successfully.</p>
-		  	<Link to={'recipe/' + this.props.addItemSuccess.item.path} className="mdl-button mdl-js-button mdl-button--raised">
+		  	<Link to={'/recipe/' + this.props.addItemSuccess.item.path} className="mdl-button mdl-js-button mdl-button--raised">
 						Go To Recipe
 				</Link>
 		  	<Link to="/add-recipe" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
@@ -53,6 +56,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => {
   return {
     addItem: (newItem) => dispatch(addItem(newItem, true)),
+    clearProps: () => dispatch(addItemSuccess(null))
+
   };
 };
 

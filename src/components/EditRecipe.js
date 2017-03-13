@@ -12,8 +12,9 @@ class EditRecipe extends React.Component {
 		this.state = {
 		}
 	}
-	componentDidMount() {
+	componentWillMount() {
     document.title = this.props.routeParams.id;
+/*
 		const arr = Object.keys(this.props.items).map(key => this.props.items[key])
 
     const meal = {};
@@ -21,7 +22,8 @@ class EditRecipe extends React.Component {
 	    console.log('meal',meal)
 	    return meal.path === this.props.routeParams.id;
     }
-
+*/
+		this.getMealToEdit();
     
   }
   

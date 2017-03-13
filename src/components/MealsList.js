@@ -134,7 +134,7 @@ class MealsList extends React.Component {
  
 	          { this.state.queryResult.map((meal) => (
 	            
-							<div className="mdl-card mdl-shadow--4dp"  key={meal.title}>
+							<div className="mdl-card mdl-shadow--4dp"  key={meal.id}>
 								<div className={'mdl-card__title'} style={{backgroundImage: 'url('+meal.imageUrl+')'}}>
 									<h3 className="mdl-card__title-text">{meal.title}</h3>
 								</div>

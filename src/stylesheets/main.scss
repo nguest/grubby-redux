@@ -171,6 +171,14 @@ form {
 	top: 150px;
 }
 
+.recipe-notes {
+	width:100%;
+	max-width: 500px;
+  background: #f7f7f7;
+    /* border: 1px solid #aaa; */
+  padding: 16px;
+}
+
 .mdl-dialog {
 	background: grey;
 	position:fixed;

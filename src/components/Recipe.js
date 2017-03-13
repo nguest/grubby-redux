@@ -5,6 +5,9 @@ import { unixTimeToString } from '../lib/utilFunctions';
 import { deleteItem } from '../actions/items';
 import Modal, { closeStyle } from './ModalDialog';
 
+import { removeItemSuccess } from '../actions/items';
+
+
 
 class Recipe extends React.Component {
 	
@@ -22,6 +25,7 @@ class Recipe extends React.Component {
     document.title = this.props.routeParams.id;
     
 		  const meals = Object.keys(this.props.items).map(key => this.props.items[key])
+		  console.log(meals)
 			let meal = meals.find((x)=>{
 				return x.path === this.props.routeParams.id;
 			})
@@ -47,6 +51,10 @@ class Recipe extends React.Component {
 				meal
 			})
 	  }
+  }
+  
+  componentWillUnmount() {
+	  this.props.clearProps();
   }
 
 	deleteRecipe = () => {
@@ -95,18 +103,18 @@ class Recipe extends React.Component {
 	      <div className="container">
 	      
 	      	<h2 className="display--inline-block">{meal.title}</h2>
-	      	<Link className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored button--recipe-edit" to={'../edit/' + meal.path}>
+	      	<Link className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored button--recipe-edit" to={'/edit/' + meal.path}>
 						<i className="material-icons">mode_edit</i>
 					</Link>
 					<button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect  button--recipe-delete" onClick={this.modalShow}>
 						<i className="material-icons">delete_forever</i>
 					</button>
 					<p>Last Updated: {unixTimeToString(meal.timeUpdated)}</p>
-					<div className="mdl-chip">
+					<div className="mdl-chip" style={{marginBottom:16}}>
 						<span className="mdl-chip__text">{meal.cuisineType}</span>
 					</div>
 					{ meal.recipeFile ? (
-						<Link to={meal.recipeFile.url} className="display--block">
+						<Link to={meal.recipeFile.url} className="display--block" >
 							{ meal.recipeFile.type.substring(0,5) == 'image' ?
 								(<img src={meal.recipeFile.url} style={{width:200}}/>) :
 								null
@@ -123,13 +131,14 @@ class Recipe extends React.Component {
 	      		<h4><i className="material-icons">library_books</i> {meal.bookName} {meal.bookPageNo ? 'p.'+ meal.bookPageNo : null }</h4> :
 	      		null
 	      	}
+	      	<br/>
 	      	{ meal.webUrl ?
-		      	<a className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored display--inlne-block" href={meal.webUrl} target="_blank">
-							Recipe
+		      	<a className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored display--inline-block" style={{marginBottom:16}} href={meal.webUrl} target="_blank">
+							Recipe <i className="material-icons">link</i>
 						</a> :
 						null
 					}
-					<p dangerouslySetInnerHTML={{__html: meal.notes}}></p>
+					<p dangerouslySetInnerHTML={{__html: meal.notes}} className="recipe-notes"></p>
 
 	      	<img src={meal.imageUrl} style={{width:200}} className="display--block"/>
 	      	
@@ -170,6 +179,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (id) => dispatch(deleteItem(id)),
+    clearProps: () => dispatch(removeItemSuccess(null))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Recipe);

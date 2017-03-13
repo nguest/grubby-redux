@@ -23,7 +23,7 @@ const router = (
       <IndexRoute component={Home}/>
       <Route path="recipe(/:id)" component={Recipe}/>
       <Route path="add-recipe" component={AddRecipe}/>
-      <Route path="edit(/:id)" component={EditRecipe}/>
+      <Route path="edit/:id" component={EditRecipe}/>
       <Route path="*" component={NotFound}/>
     </Route>
   </Router>

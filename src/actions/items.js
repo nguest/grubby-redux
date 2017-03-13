@@ -22,11 +22,20 @@ export function itemsFetchDataSuccess(items) {
   };
 }
 
+
 export function addItemSuccess(itemToSave) {
-  return {
-    type: 'ADD_ITEM_SUCCESS',
-    itemToSave
-  };
+	console.log('addItemSuccess')
+	if (itemToSave) {
+	  return {
+	    type: 'ADD_ITEM_SUCCESS',
+	    itemToSave
+	  };
+	} else {
+		return {
+	  	type:	'CLEAR_ADD_ITEM_SUCCESS',
+	  	null
+	  }
+	}
 }
 
 export function itemToEdit(item) {
@@ -38,10 +47,17 @@ export function itemToEdit(item) {
 }
 
 export function removeItemSuccess(itemToRemove) {
-  return {
-    type: 'REMOVE_ITEM_SUCCESS',
-    itemToRemove
-  };
+	if (itemToRemove) {
+	  return {
+	    type: 'REMOVE_ITEM_SUCCESS',
+	    itemToRemove
+	  }
+  } else {
+	  return {
+	  	type:	'CLEAR_REMOVE_ITEM_SUCCESS',
+	  	null
+	  }
+  }
 }
 
 
@@ -132,7 +148,6 @@ export function addItem(newItem, isNew) {
 }
 
 export function deleteItem(itemToRemove) {
-
 	return (dispatch) => {
 		return database.ref('Meals').child(itemToRemove.id).remove()
 		.then((error) => {
@@ -144,6 +159,5 @@ export function deleteItem(itemToRemove) {
 				dispatch(removeItemSuccess(itemToRemove))
 			}
 		})
-
 	}
 }
