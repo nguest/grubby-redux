@@ -10,5 +10,7 @@ module.exports = [
 	"Swedish",
 	"Danish",
 	"Swiss",
-	"Indian"
+	"Indian",
+	"Vietnamese",
+	"Moroccan"
 ]

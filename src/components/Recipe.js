@@ -22,23 +22,25 @@ class Recipe extends React.Component {
 	}
 	
 	componentDidMount() {
-    document.title = this.props.routeParams.id;
-    
-		  const meals = Object.keys(this.props.items).map(key => this.props.items[key])
-		  console.log(meals)
-			let meal = meals.find((x)=>{
-				return x.path === this.props.routeParams.id;
-			})
-			this.setState({
-				meal
-			})
+    document.title = 'Recipe loading...';
+
+	  const meals = Object.keys(this.props.items).map(key => this.props.items[key])
+	  console.log(meals)
+		let meal = meals.find((x)=>{
+			return x.path === this.props.routeParams.id;
+		})
         
     this.setState({
-	    //meal,
+	    meal,
 	    id: this.props.routeParams.id,
 	    loading: false,
 	    dialogShown: false
     })
+    
+    if (meal) document.title = meal.title;
+
+    
+
   }
   
   componentWillReceiveProps(newProps) {
@@ -50,6 +52,8 @@ class Recipe extends React.Component {
 			this.setState({
 				meal
 			})
+			document.title = meal.title;
+
 	  }
   }
   
@@ -114,9 +118,9 @@ class Recipe extends React.Component {
 						<span className="mdl-chip__text">{meal.cuisineType}</span>
 					</div>
 					{ meal.recipeFile ? (
-						<Link to={meal.recipeFile.url} className="display--block" >
+						<a href={decodeURI(meal.recipeFile.url)} className="display--block" target="_blank">
 							{ meal.recipeFile.type.substring(0,5) == 'image' ?
-								(<img src={meal.recipeFile.url} style={{width:200}}/>) :
+								(<img src={meal.recipeFile.url} className="mdl-shadow--2dp" style={{width:200}}/>) :
 								null
 							}
 							{
@@ -124,7 +128,7 @@ class Recipe extends React.Component {
 								(<embed src={meal.recipeFile.url} style={{width:500, height: 500}}/> ):
 								null
 							}
-						</Link>):
+						</a>):
 						null
 					}
 					{ meal.bookName ?
@@ -138,9 +142,12 @@ class Recipe extends React.Component {
 						</a> :
 						null
 					}
-					<p dangerouslySetInnerHTML={{__html: meal.notes}} className="recipe-notes"></p>
+					{ meal.notes ?
+						<p dangerouslySetInnerHTML={{__html: meal.notes}} className="recipe-notes"></p> :
+						null
+					}
 
-	      	<img src={meal.imageUrl} style={{width:200}} className="display--block"/>
+	      	<img src={meal.imageUrl} style={{width:200}} className="display--block mdl-shadow--2dp"/>
 	      	
 					<Modal
 						closeOnOuterClick={true}

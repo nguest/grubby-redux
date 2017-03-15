@@ -26,15 +26,10 @@ export function items(state = [], action) {
 	switch (action.type) {
 		case 'ITEMS_FETCH_DATA_SUCCESS':
 		  return action.items;
-/*
-		case 'ITEM_TO_EDIT':
-		  return action.item;
-*/
 		case 'ADD_ITEM_SUCCESS':
 			console.log('reducer', action.itemToSave)
 			let newItem = action.itemToSave
 			let id  = action.itemToSave.id
-
 			newState = {}
 			if (store.getState().items) {
 				console.log('store.getState().items',store.getState().items)
@@ -48,12 +43,6 @@ export function items(state = [], action) {
 			} else {
 				return state;
 			}
-/*
-			return Object.assign({}, state,
-        { items: [...state.items, action.itemToSave] }
-			
-      )
-*/
  		case 'REMOVE_ITEM_SUCCESS':
 			let deletedItem = action.itemToRemove
 			id = action.itemToRemove.id
@@ -69,11 +58,6 @@ export function items(state = [], action) {
 			} else {
 				return state;
 			}
-
-
-			return 
-				newState;
-			
 
 		default:
 		  return state;
