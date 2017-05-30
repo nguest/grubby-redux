@@ -1,38 +1,39 @@
 import { database, storage } from '../database';
+import ActionTypes from './types';
 
 export function itemsHasErrored(bool) {
   console.log('errored')
   return {
-      type: 'ITEMS_HAS_ERRORED',
-      hasErrored: bool
+    type: ActionTypes.ITEMS_HAS_ERRORED,
+    hasErrored: bool
   };
 }
+
 export function itemsIsLoading(bool) {
   console.log('loading',bool)
-
   return {
-    type: 'ITEMS_IS_LOADING',
+    type: ActionTypes.ITEMS_IS_LOADING,
     isLoading: bool
   };
 }
+
 export function itemsFetchDataSuccess(items) {
   return {
-    type: 'ITEMS_FETCH_DATA_SUCCESS',
+    type: ActionTypes.ITEMS_FETCH_DATA_SUCCESS,
     items
   };
 }
-
 
 export function addItemSuccess(itemToSave) {
 	console.log('addItemSuccess')
 	if (itemToSave) {
 	  return {
-	    type: 'ADD_ITEM_SUCCESS',
+	    type: ActionTypes.ADD_ITEM_SUCCESS,
 	    itemToSave
 	  };
 	} else {
 		return {
-	  	type:	'CLEAR_ADD_ITEM_SUCCESS',
+	  	type:	ActionTypes.CLEAR_ADD_ITEM_SUCCESS,
 	  	null
 	  }
 	}
@@ -41,7 +42,7 @@ export function addItemSuccess(itemToSave) {
 export function itemToEdit(item) {
 	console.log('action',item)
 	return (dispatch) => {
-		type: 'ITEM_TO_EDIT',
+		type: ActionTypes.ITEM_TO_EDIT,
 		item
 	}
 }
@@ -49,27 +50,24 @@ export function itemToEdit(item) {
 export function removeItemSuccess(itemToRemove) {
 	if (itemToRemove) {
 	  return {
-	    type: 'REMOVE_ITEM_SUCCESS',
+	    type: ActionTypes.REMOVE_ITEM_SUCCESS,
 	    itemToRemove
 	  }
   } else {
 	  return {
-	  	type:	'CLEAR_REMOVE_ITEM_SUCCESS',
+	  	type:	ActionTypes.CLEAR_REMOVE_ITEM_SUCCESS,
 	  	null
 	  }
   }
 }
 
-
 export function itemsFetchData(url) {
-
   return (dispatch) => {
 	  dispatch(itemsIsLoading(true));
 
 		return database.ref('Meals')
 		.once('value', snap => {
       const items = snap.val();
-      console.log('gotitems',items)
 			dispatch(itemsFetchDataSuccess(items))
 			dispatch(itemsIsLoading(false));
 		}).catch((err) => {
@@ -77,7 +75,6 @@ export function itemsFetchData(url) {
 			dispatch(itemsHasErrored(true))
 		})
 	}
-    
 }
 
 export function addItem(newItem, isNew) {
@@ -90,33 +87,31 @@ export function addItem(newItem, isNew) {
 		  id = newItem.id
 	  }
 	  
-	  
+	  // if there's a recipe file to upload from the form:
 	  if (newItem.recipeFile) {
 	  	var storageRef = storage.ref()
 	  
-			const file = newItem.recipeFile[0]; // use the Blob or File API
+			const file = newItem.recipeFile[0];
 			const metadata = {
 				contentType: newItem.recipeFile[0].type,
 			};
 			let recipeFile = {};
+			// save the file to firebase storage
 			var uploadTask = storageRef.child('images/'+newItem.recipeFile[0].name).put(file, metadata)
 			.then((result, error) => {
 				if (result) {
-					console.log('result',result)			
 					console.log('saved to storage')
 					recipeFile = { url: result.a.downloadURLs[0], type: result.a.contentType }
 					doDatabaseSave(recipeFile)
 				}
-			})
-			
+			})	
 		} else {
 			 doDatabaseSave(null);
 		}
 			  
 		function doDatabaseSave(recipeFile) {
-			console.log('recipeFile',recipeFile)
-		  newItem.notes = newItem.notes ? newItem.notes.replace(/\r?\n/g, '<br />') : null
-		  
+			// parse textfield and convert newlines to html linebreakss
+		  newItem.notes = newItem.notes ? newItem.notes.replace(/\r?\n/g, '<br />') : null;
 		  
 		  let itemToSave = {
 			  id: id,
@@ -142,7 +137,6 @@ export function addItem(newItem, isNew) {
 					dispatch(addItemSuccess(itemToSave))
 				}
 			})
-		
 		}
 	}
 }

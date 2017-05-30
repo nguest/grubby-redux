@@ -12,7 +12,7 @@ let middlewares = [];
 
 // add the router middleware
 middlewares.push(routerMiddleware(browserHistory));
-console.log('process.env.NODE_ENV',process.env.NODE_ENV)
+console.log('process.env.NODE_ENV',process.env.NODE_ENV	)
 if (process.env.NODE_ENV != 'production') {
   const createLogger = require(`redux-logger`);
   const logger = createLogger();
@@ -36,39 +36,3 @@ const history = syncHistoryWithStore(browserHistory, store);
 // export
 export { store, history };
 
-
-/*
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
-import {
-  AppRegistry,
-} from 'react-native';
-
-import reducer from './app/reducers';
-import AppContainer from './app/containers/AppContainer';
-
-const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__})
-
-function configureStore(initialState) {
-	const enhancer = compose(
-		applyMiddleware(
-			thunkMiddleware,
-			loggerMiddleware
-		)
-	)
-	return createStore(reducer, initialState, enhancer);
-}
-
-const store = configureStore({});
-
-const App = () => (
-	<Provider store={store}>
-		<AppContainer/>
-	</Provider>
-)
-
-AppRegistry.registerComponent('AppName', () => App);
-*/

@@ -1,10 +1,11 @@
 import createReducer from '../lib/createReducer';
-// import * as types from '../actions/types';
 import { store } from '../store';
+import ActionTypes from '../actions/types';
+
 
 export function itemsHasErrored(state = false, action) {
   switch (action.type) {
-    case 'ITEMS_HAS_ERRORED':
+    case ActionTypes.ITEMS_HAS_ERRORED:
       return action.hasErrored;
     default:
       return state;
@@ -13,7 +14,7 @@ export function itemsHasErrored(state = false, action) {
 
 export function itemsIsLoading(state = false, action) {
   switch (action.type) {
-		case 'ITEMS_IS_LOADING':
+		case ActionTypes.ITEMS_IS_LOADING:
 		console.log('loading')
 		  return action.isLoading;
 		default:
@@ -24,9 +25,10 @@ export function itemsIsLoading(state = false, action) {
 export function items(state = [], action) {
 	let newState = {}
 	switch (action.type) {
-		case 'ITEMS_FETCH_DATA_SUCCESS':
+		case ActionTypes.ITEMS_FETCH_DATA_SUCCESS:
 		  return action.items;
-		case 'ADD_ITEM_SUCCESS':
+
+		case ActionTypes.ADD_ITEM_SUCCESS:
 			console.log('reducer', action.itemToSave)
 			let newItem = action.itemToSave
 			let id  = action.itemToSave.id
@@ -43,7 +45,8 @@ export function items(state = [], action) {
 			} else {
 				return state;
 			}
- 		case 'REMOVE_ITEM_SUCCESS':
+
+ 		case ActionTypes.REMOVE_ITEM_SUCCESS:
 			let deletedItem = action.itemToRemove
 			id = action.itemToRemove.id
 			newState = {}
@@ -64,20 +67,12 @@ export function items(state = [], action) {
 	}
 }
 
-/*
-case 'USERS_ADD_SAVE':
-      const user = action.user;
-      user.id = user.id || Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-      return [...state, user];
-*/
-
 
 export function addItemSuccess(state = [], action) {
-	console.log(state)
 	switch (action.type) {
-		case 'ADD_ITEM_SUCCESS':
+		case ActionTypes.ADD_ITEM_SUCCESS:
 		  return {status: true, item: action.itemToSave} ;
-		case 'CLEAR_ADD_ITEM_SUCCESS':
+		case ActionTypes.CLEAR_ADD_ITEM_SUCCESS:
       return {status: false, item: null };
 		default:
 		  return state;
@@ -86,9 +81,9 @@ export function addItemSuccess(state = [], action) {
 
 export function removeItemSuccess(state = {status:false,item: {}}, action) {
 	switch (action.type) {
-    case 'REMOVE_ITEM_SUCCESS':
+    case ActionTypes.REMOVE_ITEM_SUCCESS:
       return {status: true, item: action.itemToRemove };
-    case 'CLEAR_REMOVE_ITEM_SUCCESS':
+    case ActionTypes.CLEAR_REMOVE_ITEM_SUCCESS:
       return {status: false, item: null };
     default:
       return state;

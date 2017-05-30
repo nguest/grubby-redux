@@ -9,7 +9,7 @@ class MealsList extends React.Component {
     super(props);
 		this.state = {
 			inputValue: '',
-			queryResult: Object.keys(this.props.items).map(key => this.props.items[key]),
+			queryResult: Object.keys(this.props.items).map(key => this.props.items[key]), //make an array from the JSON
 			viewableCuisineTypes: cuisineTypes
 		}
   }
@@ -101,10 +101,8 @@ class MealsList extends React.Component {
 				</div>
 			)
     }	else {
-    //if (!this.props.isLoading) {
       return (
 	      <div>
-	      
 		      <div className="container-flow align-items--center">
 						<div className="mdl-textfield mdl-js-textfield">
 					    <label className="search-icon">
@@ -135,7 +133,7 @@ class MealsList extends React.Component {
 	          { this.state.queryResult.map((meal) => (
 	            
 							<div className="mdl-card mdl-shadow--4dp"  key={meal.id}>
-								<div className={'mdl-card__title'} style={{backgroundImage: 'url('+meal.imageUrl+')'}}>
+								<div className={'mdl-card__title'} style={{backgroundImage: `url('${meal.imageUrl}')`}}>
 									<h3 className="mdl-card__title-text">{meal.title}</h3>
 								</div>
 								<div className="mdl-card__supporting-text">

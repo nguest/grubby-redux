@@ -12,7 +12,6 @@ module.exports.entry = [
 
 module.exports.output = {
     path: __dirname + '/public/js',
-    //publicPath: 'js/',
     publicPath: 'js/',
     filename: 'bundle.js',
     chunkFilename: '[id].[chunkhash].js',
@@ -32,7 +31,7 @@ module.exports.plugins.push(
     comments: false,
     compressor: {
       warnings: false,
-      drop_console: true
+      drop_console: true // hide console logs in prod
     }
   })
 );

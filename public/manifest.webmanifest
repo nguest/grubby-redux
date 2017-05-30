@@ -1,0 +1,11 @@
+{
+  "name": "Grubby",
+  "short_name": "Grubby Recipes",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "",
+  "related_applications": [{
+    "platform": "web"
+  }]
+}

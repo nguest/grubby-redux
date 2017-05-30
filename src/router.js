@@ -10,11 +10,6 @@ import EditRecipe from "./components/EditRecipe";
 
 import NotFound from "./components/NotFound";
 
-/*
-const appHistory = useRouterHistory(createHistory)({
-  basename: "/grubby"
-});
-*/
 
 // build the router
 const router = (
@@ -29,5 +24,4 @@ const router = (
   </Router>
 );
 
-// export
 export { router };

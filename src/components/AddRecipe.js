@@ -16,7 +16,6 @@ class AddRecipe extends React.Component {
 		}
 	}
 	
-	
 	componentWillMount() {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
@@ -49,16 +48,18 @@ class AddRecipe extends React.Component {
 		firebase.auth().signInWithPopup(provider)
 		.then(this.handleAuth)
 		.catch((error) => {
-			console.log('error authenticating', error)
+			console.log('error authenticating', error) // TODO: display error
 		});
 	}
 	
 	handleAuth = (authData) => {
 		let user = authData.user || authData
-		if (user.uid == '5Alo9I0aWLh8jO0NQzUxjHjrO3B2'){
+		if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) {
 			this.setState({
 				uid: user
 			})
+		} else {
+			console.log('unauth user')
 		}
 	}
 	

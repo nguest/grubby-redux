@@ -21,11 +21,11 @@ class AddRecipeForm extends React.Component {
 	   this.props.initialize(this.props.mealToEdit);
   }
   
+  // TODO: add form validation
 
   render() {
-	  console.log('Formprops',this.props)
-
-    const { handleSubmit, load, pristine, submitting } = this.props
+    const { handleSubmit, load, pristine, submitting } = this.props;
+    
 	  return (
 		  	<form onSubmit={handleSubmit}>
 	        <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from 'react-router';
 import { connect } from "react-redux";
+import firebase from 'firebase';
+
 import { unixTimeToString } from '../lib/utilFunctions';
 import { deleteItem } from '../actions/items';
 import Modal, { closeStyle } from './ModalDialog';
 
 import { removeItemSuccess } from '../actions/items';
-
 
 
 class Recipe extends React.Component {
@@ -17,8 +18,16 @@ class Recipe extends React.Component {
 			id: null,
 			meal: {},
 			loading: true,
-			dialogShown: false
+			dialogShown: false,
+			uid: null
 		}
+	}
+	componentWillMount() {
+		firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				this.handleAuth(user);
+			}
+		})
 	}
 	
 	componentDidMount() {
@@ -39,8 +48,6 @@ class Recipe extends React.Component {
     
     if (meal) document.title = meal.title;
 
-    
-
   }
   
   componentWillReceiveProps(newProps) {
@@ -60,6 +67,39 @@ class Recipe extends React.Component {
   componentWillUnmount() {
 	  this.props.clearProps();
   }
+	
+	authenticate = (provider) => {
+		firebase.auth().signInWithPopup(provider)
+		.then(this.handleAuth)
+		.catch((error) => {
+			console.log('error authenticating', error)
+		});
+	}
+	
+	handleAuth = (authData) => {
+		let user = authData.user || authData;
+		
+		if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) {
+			this.setState({
+				uid: user
+			})
+		} else {
+			console.log('unauth user')
+		}
+	}
+	
+	signOut = () => {
+		firebase.auth().signOut()
+		.then(() => {
+			this.setState({
+				uid: null
+			})
+		})
+		.catch((error) => {
+			console.log('error signing out', error)
+		});
+	}
+
 
 	deleteRecipe = () => {
 		this.props.deleteItem(this.state.meal)
@@ -80,7 +120,6 @@ class Recipe extends React.Component {
   }
 
   render() {
-	  console.log('this.state',this.state)
 		if (this.props.hasErrored) {
       return <p>Sorry! There was an error loading the items</p>;
     }
@@ -94,7 +133,7 @@ class Recipe extends React.Component {
     if (this.props.removeItemSuccess.status) {
 		  return (<div className="container">
 		  	<h2>Deleted!</h2>
-				<p>Recipe <strong>{'"' + this.props.removeItemSuccess.item.title + '"'}</strong> deleted successfully.</p>
+				<p>Recipe <strong>{this.props.removeItemSuccess.item.title}</strong> deleted successfully.</p>
 
 		  	<Link to="/" className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 						Go Home ?
@@ -107,12 +146,24 @@ class Recipe extends React.Component {
 	      <div className="container">
 	      
 	      	<h2 className="display--inline-block">{meal.title}</h2>
-	      	<Link className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored button--recipe-edit" to={'/edit/' + meal.path}>
-						<i className="material-icons">mode_edit</i>
-					</Link>
-					<button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect  button--recipe-delete" onClick={this.modalShow}>
-						<i className="material-icons">delete_forever</i>
-					</button>
+	      	
+	      	{ this.state.uid ?
+		      	<div className = "edit-buttons">
+			      	<Link className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored button--recipe-edit" to={'/edit/' + meal.path}>
+								<i className="material-icons">mode_edit</i>
+							</Link>
+							<button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect  button--recipe-delete" onClick={this.modalShow}>
+								<i className="material-icons">delete_forever</i>
+							</button>
+							<button className="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--accent" onClick={this.signOut}>
+								<i className="material-icons">exit_to_app</i>
+							</button>
+						</div> :
+						<div className = "edit-buttons">
+							<button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={() => this.authenticate(new firebase.auth.GoogleAuthProvider())}>Login with Google to Edit</button>	
+						</div>
+
+					}
 					<p>Last Updated: {unixTimeToString(meal.timeUpdated)}</p>
 					<div className="mdl-chip" style={{marginBottom:16}}>
 						<span className="mdl-chip__text">{meal.cuisineType}</span>
@@ -125,10 +176,10 @@ class Recipe extends React.Component {
 							}
 							{
 							meal.recipeFile.type == 'application/pdf' ?
-								(<embed src={meal.recipeFile.url} style={{width:500, height: 500}}/> ):
+								(<embed src={meal.recipeFile.url} style={{width:500, height: 500}}/>) :
 								null
 							}
-						</a>):
+						</a>) :
 						null
 					}
 					{ meal.bookName ?
@@ -171,9 +222,6 @@ class Recipe extends React.Component {
 	}
 }
 
-//pdf: <embed src="file_name.pdf" width="800px" height="2100px" />
-
-
 function mapStateToProps(state) {
   return {
     items: state.items,
@@ -183,10 +231,12 @@ function mapStateToProps(state) {
     page: Number(state.routing.locationBeforeTransitions.query.page) || 1,
   };
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteItem: (id) => dispatch(deleteItem(id)),
     clearProps: () => dispatch(removeItemSuccess(null))
   };
-};
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(Recipe);

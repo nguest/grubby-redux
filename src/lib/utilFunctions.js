@@ -9,6 +9,8 @@ export function unixTimeToString(unixTime) {
 	var month0 = dateNow.getUTCMonth() + 1;
 	var day0 = dateNow.getUTCDate();
 	
+	// let's do proper Euro dates...
+	
 	if (year0 == year && month0 == month && day0 == day) {
 		return 'Today'
 	} else {
@@ -23,7 +25,6 @@ export function secondsToString(seconds) {
 	var ss = date.getSeconds();
 
 	hh = (hh == 0) ? '' : hh + ':';
-	//if (hh < 10) {hh = "0"+hh;}
 	if (mm < 10) {
 		mm = "0"+mm +':';
 	} else {

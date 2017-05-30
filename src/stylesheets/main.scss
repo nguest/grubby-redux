@@ -159,16 +159,24 @@ form {
 	}
 }
 
-.button--recipe-edit {
+
+.edit-buttons {
 	position: fixed;
 	right: 56px;
 	top: 150px;
-}
 
-.button--recipe-delete {
-	position: fixed;
-	right: 128px;
-	top: 150px;
+	.button--recipe-edit {
+		margin-right:10px;
+	}
+	
+	.button--recipe-delete {
+	  margin-right:10px;
+
+	}
+	@media (max-width:1024px) {
+		top: 70px;
+		right: 16px;
+	}
 }
 
 .recipe-notes {

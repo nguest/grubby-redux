@@ -3,10 +3,7 @@ import React from 'react'
 export default class Modal extends React.Component{
 
   constructor(props){
-    super()
-    this.hideOnOuterClick = this.hideOnOuterClick.bind(this)
-    this.fadeIn = this.fadeIn.bind(this)
-    this.fadeOut = this.fadeOut.bind(this)
+    super(props)
 
     let opacity = 0,
       display = 'block',
@@ -26,11 +23,6 @@ export default class Modal extends React.Component{
     }
   }
 
-  hideOnOuterClick(event){
-    if(this.props.closeOnOuterClick === false) return
-    if(event.target.dataset.modal && this.props.onClose instanceof Function) this.props.onClose(event)
-  }
-
   componentWillReceiveProps(props){
     if(this.props.show != props.show){
       if(this.props.transitionSpeed){
@@ -39,6 +31,10 @@ export default class Modal extends React.Component{
       }
       else this.setState({show: props.show})
     }
+  }
+  
+  hideOnOuterClick = (event) => {
+	  //todo : hide modal on click outside the modal
   }
 
   fadeIn = () => {

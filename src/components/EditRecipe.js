@@ -14,17 +14,7 @@ class EditRecipe extends React.Component {
 	}
 	componentWillMount() {
     document.title = this.props.routeParams.id;
-/*
-		const arr = Object.keys(this.props.items).map(key => this.props.items[key])
-
-    const meal = {};
-    const findMeal = (meal) => {
-	    console.log('meal',meal)
-	    return meal.path === this.props.routeParams.id;
-    }
-*/
 		this.getMealToEdit();
-    
   }
   
   getMealToEdit = () => {
@@ -39,7 +29,6 @@ class EditRecipe extends React.Component {
   }
   
   handleFormSubmit = (values) => {
-    console.log(values);
     this.props.addItem(values, false)
   }
 	
@@ -79,7 +68,6 @@ class EditRecipe extends React.Component {
 function mapStateToProps(state) {
   return {
     items: state.items,
-    //itemToEdit: state.itemToEdit,
     addItemSuccess: state.addItemSuccess,
   };
 }

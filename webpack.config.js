@@ -1,13 +1,13 @@
 // http://webpack.github.io/docs/configuration.html
 // http://webpack.github.io/docs/webpack-dev-server.html
-var app_root = 'src'; // the app root folder: src, src_users, etc
+var app_root = 'src'; // the app root folder: src, etc
 var path = require('path');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
 
 var webpack = require('webpack')
 const pkg = require('./package.json');
-const useHMR = !!global.HMR; // Hot Module Replacement (HMR)
+const useHMR = !!global.HMR; // Hot Module Replacement
 const isDebug = global.DEBUG === false ? false : !process.argv.includes('--release');
 
 const babelConfig = Object.assign({}, pkg.babel, {
@@ -28,7 +28,6 @@ module.exports = {
   output: {
     path: __dirname + '/public/js',
     publicPath: 'js/',
-    //publicPath: 'grubby/js/',
     filename: 'bundle.js',
     chunkFilename: isDebug ? '[id].js?[chunkhash]' : '[id].[chunkhash].js',
 
