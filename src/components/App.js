@@ -11,8 +11,8 @@ import { itemsFetchData } from '../actions/items';
 class App extends React.Component {
 
 	componentWillMount() {
-    // the first time we load the app, we need that users list
-    this.props.fetchData('./data.json')
+    // on load, get the firebase data
+    this.props.fetchData()
   }
   // render
   render() {
@@ -67,9 +67,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: (url) => dispatch(itemsFetchData(url)),
+    fetchData: () => dispatch(itemsFetchData()),
     itemToEdit: (item) => dispatch(itemToEdit(item))
-
   };
 };
 
