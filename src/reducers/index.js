@@ -12,5 +12,4 @@ export const reducers = combineReducers({
   itemsIsLoading,
   addItemSuccess,
   removeItemSuccess
-  //more reducers...
 });

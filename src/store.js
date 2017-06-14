@@ -7,10 +7,8 @@ import createLogger from 'redux-logger';
 
 import { reducers } from "./reducers/index";
 
-// add the middlewares
 let middlewares = [];
 
-// add the router middleware
 middlewares.push(routerMiddleware(browserHistory));
 console.log('process.env.NODE_ENV',process.env.NODE_ENV	)
 if (process.env.NODE_ENV != 'production') {
@@ -20,11 +18,10 @@ if (process.env.NODE_ENV != 'production') {
 }
 
 middlewares.push(thunkMiddleware);
-// apply the middleware
+
 let middleware = applyMiddleware(...middlewares);
 
 
-// add the redux dev tools
 if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
   middleware = compose(middleware, window.devToolsExtension());
 }
@@ -33,6 +30,5 @@ if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
 const store = createStore(reducers, middleware);
 const history = syncHistoryWithStore(browserHistory, store);
 
-// export
 export { store, history };
 

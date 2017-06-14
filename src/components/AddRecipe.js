@@ -54,12 +54,12 @@ class AddRecipe extends React.Component {
 	
 	handleAuth = (authData) => {
 		let user = authData.user || authData
-		if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) {
+		if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) { // temporary...
 			this.setState({
 				uid: user
 			})
 		} else {
-			console.log('unauth user')
+			console.log('unauth user') // TODO - obviously add multiuser authenticate and proper error handling
 		}
 	}
 	

@@ -15,7 +15,6 @@ export function itemsHasErrored(state = false, action) {
 export function itemsIsLoading(state = false, action) {
   switch (action.type) {
 		case ActionTypes.ITEMS_IS_LOADING:
-		console.log('loading')
 		  return action.isLoading;
 		default:
 	  return state;
@@ -29,18 +28,14 @@ export function items(state = [], action) {
 		  return action.items;
 
 		case ActionTypes.ADD_ITEM_SUCCESS:
-			console.log('reducer', action.itemToSave)
 			let newItem = action.itemToSave
 			let id  = action.itemToSave.id
 			newState = {}
 			if (store.getState().items) {
-				console.log('store.getState().items',store.getState().items)
 				let items = store.getState().items;
-				//items = Object.assign({}, items, {id: newItem})
 				items[id] = newItem;
 				newState.items = items;
 				newState = Object.assign({}, state, newState.items)
-				console.log('newState',newState)
 				return newState;
 			} else {
 				return state;
@@ -51,12 +46,9 @@ export function items(state = [], action) {
 			id = action.itemToRemove.id
 			newState = {}
 			if (store.getState().items) {
-				console.log('store.getState().items',store.getState().items)
 				let thestate = Object.assign({}, store.getState());
 				delete thestate.items[id];
-				console.log('thestate',thestate)
 				newState = Object.assign({}, thestate)
-				console.log('newState',newState)
 				return newState.items;
 			} else {
 				return state;

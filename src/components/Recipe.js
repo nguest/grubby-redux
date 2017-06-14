@@ -72,14 +72,14 @@ class Recipe extends React.Component {
 		firebase.auth().signInWithPopup(provider)
 		.then(this.handleAuth)
 		.catch((error) => {
-			console.log('error authenticating', error)
+			console.log('error authenticating', error) // / TODO - obviously add multiuser authenticate and proper error handling, separate module
 		});
 	}
 	
 	handleAuth = (authData) => {
 		let user = authData.user || authData;
 		
-		if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) {
+		if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) { // temporary
 			this.setState({
 				uid: user
 			})
@@ -115,7 +115,6 @@ class Recipe extends React.Component {
   }
   
   modalCloseCancel = () => {
-	  console.log(this.state.meal.title)
     this.setState({dialogShown: false})
   }
 

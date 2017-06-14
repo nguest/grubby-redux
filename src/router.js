@@ -11,7 +11,6 @@ import EditRecipe from "./components/EditRecipe";
 import NotFound from "./components/NotFound";
 
 
-// build the router
 const router = (
   <Router onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
     <Route path="/" component={App}>

@@ -2,7 +2,6 @@ import { database, storage } from '../database';
 import ActionTypes from './types';
 
 export function itemsHasErrored(bool) {
-  console.log('errored')
   return {
     type: ActionTypes.ITEMS_HAS_ERRORED,
     hasErrored: bool
@@ -10,7 +9,6 @@ export function itemsHasErrored(bool) {
 }
 
 export function itemsIsLoading(bool) {
-  console.log('loading',bool)
   return {
     type: ActionTypes.ITEMS_IS_LOADING,
     isLoading: bool
@@ -25,7 +23,6 @@ export function itemsFetchDataSuccess(items) {
 }
 
 export function addItemSuccess(itemToSave) {
-	console.log('addItemSuccess')
 	if (itemToSave) {
 	  return {
 	    type: ActionTypes.ADD_ITEM_SUCCESS,
@@ -40,7 +37,6 @@ export function addItemSuccess(itemToSave) {
 }
 
 export function itemToEdit(item) {
-	console.log('action',item)
 	return (dispatch) => {
 		type: ActionTypes.ITEM_TO_EDIT,
 		item
@@ -130,10 +126,8 @@ export function addItem(newItem, isNew) {
 			return database.ref('Meals').child(id).set(itemToSave)
 			.then((error) => {
 				if (error) {
-					console.log('error',error)
 					dispatch(addItemHasErrored(true))
 				} else {
-					console.log('saved')
 					dispatch(addItemSuccess(itemToSave))
 				}
 			})
@@ -146,10 +140,8 @@ export function deleteItem(itemToRemove) {
 		return database.ref('Meals').child(itemToRemove.id).remove()
 		.then((error) => {
 			if (error) {
-				console.log('error',error)
 				dispatch(removeItemHasErrored(true))
 			} else {
-				console.log('removed')
 				dispatch(removeItemSuccess(itemToRemove))
 			}
 		})
