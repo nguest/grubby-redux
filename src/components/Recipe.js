@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { array, bool, func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 
@@ -11,9 +12,7 @@ class Recipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: null,
       meal: {},
-      loading: true,
       dialogShown: false,
       uid: null,
     };
@@ -70,7 +69,7 @@ class Recipe extends React.Component {
   handleAuth = (authData) => {
     const user = authData.user || authData;
 
-    if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) { // temporary
+    if (user.email === 'nicholas.guest@gmail.com' && user.emailVerified) { // temporary
       this.setState({
         uid: user,
       });
@@ -175,7 +174,7 @@ class Recipe extends React.Component {
                 ? (<img src={meal.recipeFile.url} className="mdl-shadow--2dp" style={{ width: 200 }} />)
                 : null}
               {
-                meal.recipeFile.type == 'application/pdf'
+                meal.recipeFile.type === 'application/pdf'
                   ? (<embed src={meal.recipeFile.url} style={{ width: 500, height: 500 }} />)
                   : null
               }
@@ -235,8 +234,19 @@ class Recipe extends React.Component {
         </div>
       );
     }
+    return null;
   }
 }
+
+Recipe.propTypes = {
+  clearProps: func,
+  deleteItem: func,
+  items: array,
+  hasErrored: bool,
+  isLoading: bool,
+  removeItemSuccess: func,
+  routeParams: object,
+};
 
 function mapStateToProps(state) {
   return {

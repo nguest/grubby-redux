@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { array, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import cuisineTypes from '../cuisineTypes.json';
 
@@ -13,12 +14,8 @@ class MealsList extends React.Component {
     };
   }
 
-  componentDidMount() {
-
-  }
-
   componentWillReceiveProps(newProps) {
-    if (newProps.items != this.props.items) {
+    if (newProps.items !== this.props.items) {
       this.setState({
         queryResult: this.sortByProperty(Object.keys(newProps.items).map((key) => newProps.items[key]), 'title'),
       });
@@ -38,13 +35,12 @@ class MealsList extends React.Component {
   })
 
   handleInputChange = (e) => {
-    // magic ES6 to get array from obj.
     const meals = Object.keys(this.props.items).map((key) => this.props.items[key]);
 
     const queryResult = [];
 
     meals.forEach((meal) => {
-      if (meal.title.toLowerCase().indexOf(e.target.value.toLowerCase()) != -1) queryResult.push(meal);
+      if (meal.title.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1) queryResult.push(meal);
     });
     this.setState({
       queryResult: this.sortByProperty(queryResult, 'title'),
@@ -66,7 +62,6 @@ class MealsList extends React.Component {
     if (this.state.viewableCuisineTypes.length === 1) {
       viewableCuisineTypes = cuisineTypes,
       queryResult = meals;
-      console.log('value', queryResult);
     } else {
       viewableCuisineTypes = [value];
     }
@@ -133,7 +128,7 @@ class MealsList extends React.Component {
                 <h3 className="mdl-card__title-text">{meal.title}</h3>
               </div>
               <div className="mdl-card__supporting-text">
-                <span className="mdl-chip" onClick={(value) => this.handleCuisineChange(meal.cuisineType)}>
+                <span className="mdl-chip" onClick={() => this.handleCuisineChange(meal.cuisineType)}>
                   <span className="mdl-chip__text">{meal.cuisineType}</span>
                 </span>
               </div>
@@ -146,7 +141,7 @@ class MealsList extends React.Component {
             </div>
 
           ))}
-          { (this.state.queryResult.length == 0)
+          { (this.state.queryResult.length === 0)
             ? (
               <p>
                 No
@@ -161,6 +156,12 @@ class MealsList extends React.Component {
     );
   }
 }
+
+MealsList.propTypes = {
+  items: array,
+  hasErrored: bool,
+  isLoading: bool,
+};
 
 function mapStateToProps(state) {
   return {
