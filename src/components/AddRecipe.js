@@ -53,7 +53,7 @@ class AddRecipe extends React.Component {
 	}
 	
 	handleAuth = (authData) => {
-		let user = authData.user || authData
+    let user = authData.user || authData
 		if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) { // temporary...
 			this.setState({
 				uid: user

@@ -31,7 +31,7 @@ export function addItemSuccess(itemToSave) {
 	} else {
 		return {
 	  	type:	ActionTypes.CLEAR_ADD_ITEM_SUCCESS,
-	  	null
+	  	items: null,
 	  }
 	}
 }
@@ -52,7 +52,7 @@ export function removeItemSuccess(itemToRemove) {
   } else {
 	  return {
 	  	type:	ActionTypes.CLEAR_REMOVE_ITEM_SUCCESS,
-	  	null
+	  	items: null
 	  }
   }
 }
