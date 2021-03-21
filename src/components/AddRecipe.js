@@ -49,7 +49,7 @@ class AddRecipe extends React.Component {
   authenticate = (provider) => {
     firebase
       .auth()
-      .signInWithPopup(provider)
+      .signInWithRedirect(provider)
       .then(this.handleAuth)
       .catch((error) => {
         console.log('error authenticating', error); // TODO: display error
@@ -58,7 +58,7 @@ class AddRecipe extends React.Component {
 
   handleAuth = (authData) => {
     const user = authData.user || authData;
-    if (user.email == 'nicholas.guest@gmail.com' && user.emailVerified) {
+    if (user.email === 'nicholas.guest@gmail.com' && user.emailVerified) {
       // temporary...
       this.setState({
         uid: user,
@@ -89,7 +89,8 @@ class AddRecipe extends React.Component {
           <h2>Nice One!</h2>
           <p>
             New recipe
-            <strong>{this.props.addItemSuccess.item.title} </strong> added successfully.
+            <strong>{this.props.addItemSuccess.item.title} </strong>
+            added successfully.
           </p>
           <Link
             to={`/recipe/${this.props.addItemSuccess.item.path}`}
@@ -115,8 +116,7 @@ class AddRecipe extends React.Component {
       <div className="container">
         <h2>Add a new recipe</h2>
         <p>
-          Hello
-          {this.state.uid.displayName}!
+          {`Hello ${this.state.uid.displayName}!`}
         </p>
         <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={this.signOut}>
           Log Out
