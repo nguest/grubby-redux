@@ -71,7 +71,7 @@
     "file-loader": "^0.10.1",
     "ignore-styles": "^5.0.1",
     "mocha": "^3.2.0",
-    "node-sass": "^4.3.0",
+    "node-sass": "^7.0.0",
     "prettier": "2.0.5",
     "prop-types": "^15.7.2",
     "react-addons-test-utils": "^15.4.2",
