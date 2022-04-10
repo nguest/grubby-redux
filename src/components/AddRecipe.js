@@ -12,6 +12,8 @@ class AddRecipe extends React.Component {
     super(props);
     this.state = {
       uid: '',
+      user: '',
+      password: '',
     };
   }
 
@@ -37,31 +39,43 @@ class AddRecipe extends React.Component {
 
   renderLoginForm = () => (
     <div className="authForm">
+      <input value={this.state.user} onChange={(e) => this.setState({ user: e.target.value })} />
+      <br />
+      <input value={this.state.password} onChange={(e) => this.setState({ password: e.target.value })} type="password" />
+      <br />
       <button
         className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
         onClick={() => this.authenticate(new firebase.auth.GoogleAuthProvider())}
       >
-        Login with Google
+        Login
       </button>
     </div>
   );
 
   authenticate = (provider) => {
-    firebase
-      .auth()
-      .signInWithRedirect(provider)
-      .then(this.handleAuth)
+    firebase.auth().signInWithEmailAndPassword(this.state.user, this.state.password)
+      .then((userCredential) => {
+        // Signed in
+        const { user } = userCredential;
+        console.log({ u: userCredential.user });
+
+        // ...
+      })
       .catch((error) => {
-        console.log('error authenticating', error); // TODO: display error
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log({ error });
       });
   };
 
   handleAuth = (authData) => {
-    const user = authData.user || authData;
-    if (user.email === 'nicholas.guest@gmail.com' && user.emailVerified) {
+    console.log({ authData });
+
+    // const user = authData.email || authData;
+    if (authData.email) {
       // temporary...
       this.setState({
-        uid: user,
+        uid: authData.email,
       });
     } else {
       console.log('unauth user'); // TODO - obviously add multiuser authenticate and proper error handling
@@ -89,7 +103,10 @@ class AddRecipe extends React.Component {
           <h2>Nice One!</h2>
           <p>
             New recipe
-            <strong>{this.props.addItemSuccess.item.title} </strong>
+            <strong>
+              {this.props.addItemSuccess.item.title}
+              {' '}
+            </strong>
             added successfully.
           </p>
           <Link
@@ -116,7 +133,7 @@ class AddRecipe extends React.Component {
       <div className="container">
         <h2>Add a new recipe</h2>
         <p>
-          {`Hello ${this.state.uid.displayName}!`}
+          {`Hello ${this.state.uid}!`}
         </p>
         <button className="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onClick={this.signOut}>
           Log Out
